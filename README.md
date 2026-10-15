@@ -51,8 +51,9 @@ To play a chord, the plugin needs to know the notes of the strings:
 - a chart with **4 strings** is a ukulele in standard tuning (G C E A, with a high G)
 - a chart with **any other number of strings** needs the note of every string as its `tuning`
 
-If every string is named with a note, the tuning is used for guitars and ukuleles too, e.g. for drop
-D:
+Guitars and ukuleles with only some strings named can't be played if a name contradicts the standard
+tuning, e.g. a `D` on the lowest guitar string. Labels that aren't notes, like `1`, are ignored. If
+every string is named with a note, that tuning is used, e.g. for drop D:
 
 ```ts
 chart.configure({ strings: 7, tuning: ['B', 'E', 'A', 'D', 'G', 'B', 'E'] })

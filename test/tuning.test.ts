@@ -83,4 +83,16 @@ describe('stringTuning', () => {
     expect(stringTuning({ tuning: ['1', '2', '3', '4', '5', '6'] })).toEqual(GUITAR_TUNING)
     expect(stringTuning({ strings: 4, tuning: ['A', 'D', 'F#', 'B'] })).toEqual([57, 62, 66, 71])
   })
+
+  test('names of some strings must match the standard tuning of guitars and ukuleles', () => {
+    expect(stringTuning({ tuning: ['E', '', '', '', '', 'e'] })).toEqual(GUITAR_TUNING)
+    expect(stringTuning({ tuning: ['E2', 'A', 'x'] })).toEqual(GUITAR_TUNING)
+    expect(stringTuning({ strings: 4, tuning: ['G', '', 'E'] })).toEqual(UKULELE_TUNING)
+    expect(stringTuning({ strings: 4, tuning: ['G4', 'C4'] })).toEqual(UKULELE_TUNING)
+
+    expect(stringTuning({ tuning: ['D', '', '', '', '', ''] })).toBeUndefined()
+    expect(stringTuning({ tuning: ['E3'] })).toBeUndefined()
+    expect(stringTuning({ strings: 4, tuning: ['G3'] })).toBeUndefined()
+    expect(stringTuning({ strings: 4, tuning: ['', '', '', 'B'] })).toBeUndefined()
+  })
 })

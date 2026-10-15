@@ -141,7 +141,8 @@ export interface PlayPluginApi {
   /**
    * Whether the chord can be played: a chart with 6 strings is a guitar, with 4 strings a ukulele in
    * standard tuning. Other charts need the note of every string as their tuning, e.g.
-   * `['B', 'E', 'A', 'D', 'G', 'B', 'E']`. At least one string must sound.
+   * `['B', 'E', 'A', 'D', 'G', 'B', 'E']`. A guitar or ukulele with only some strings named can't
+   * be played if a name contradicts the standard tuning. At least one string must sound.
    */
   isPlayable(options?: Pick<PlayOptions, 'unmarkedStrings'>): boolean
 }

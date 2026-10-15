@@ -75,13 +75,31 @@ export function tuningFromNames(names: string[]): number[] | undefined {
 /**
  * The MIDI notes of the open strings of a chart, from the leftmost string. A chart is tuned to the
  * notes of its tuning labels if every string has one. Otherwise, a chart with 6 strings is a guitar
- * and a chart with 4 strings a ukulele in standard tuning. Returns undefined if the tuning of the
- * strings is unknown.
+ * and a chart with 4 strings a ukulele in standard tuning, unless a label names another note than
+ * the standard tuning has on that string. Returns undefined if the tuning of the strings is
+ * unknown.
  */
 export function stringTuning(settings: ChordSettings = {}): number[] | undefined {
   const strings = settings.strings ?? 6
-  const names = settings.tuning ?? []
-  const named = names.length >= strings ? tuningFromNames(names.slice(0, strings)) : undefined
+  const names = (settings.tuning ?? []).slice(0, strings)
+  const named = names.length === strings ? tuningFromNames(names) : undefined
+  if (named) {
+    return named
+  }
 
-  return named ?? defaultTunings[strings]
+  const standard = defaultTunings[strings]
+  if (!standard) {
+    return undefined
+  }
+  const contradicts = names.some((name, i) => {
+    const note = parseNote(name)
+    if (!note) {
+      return false
+    }
+    return note.octave === undefined
+      ? mod12(note.pitchClass) !== mod12(standard[i])
+      : midi(note) !== standard[i]
+  })
+
+  return contradicts ? undefined : standard
 }
