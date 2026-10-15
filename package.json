@@ -1,6 +1,6 @@
 {
   "name": "@svguitar/play-plugin",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "SVGuitar plugin to play chord diagrams as a guitar or ukulele sound.",
   "keywords": [
     "guitar",
